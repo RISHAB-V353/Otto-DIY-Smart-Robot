@@ -2,6 +2,9 @@
 
 An Arduino Nano-based humanoid robot capable of Bluetooth control, autonomous obstacle avoidance, and interactive dance routines.
 
+<p align="center">
+  <img src="images/20260614_233213.jpg" alt="Otto DIY Smart Robot" width="500">
+</p>
 ---
 
 # 📚 Table of Contents
