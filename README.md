@@ -159,6 +159,10 @@ This project uses **Bluetooth Electronics** by **Keuwlsoft**.
 
 > **Note:** Configure every button to send its assigned character when pressed.
 
+<p align="center">
+  <img src="images/control_panel.jpg" alt="Otto DIY Smart Robot" width="500">
+</p>
+
 ---
 
 # 🚀 Installation
