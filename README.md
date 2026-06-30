@@ -68,11 +68,8 @@ The robot is powered by a single 18650 Li-ion battery with a TP4056 USB-C chargi
               │
               ▼
         +-------------+
-        |   TP4056    |
+        |   TP4056    |  ← 18650 Li-ion Cell
         +-------------+
-              │
-              ▼
-      18650 Li-ion Cell
               │
               ▼
       DPDT Power Switch
