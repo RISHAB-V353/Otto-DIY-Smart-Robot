@@ -144,8 +144,10 @@ This project uses **Bluetooth Electronics** by **Keuwlsoft**.
 | ↙ Back Left | J |
 | ↘ Back Right | K |  
 | ⏹ Emergency Stop | X |
-| 🤖 Auto Mode | A | and 👤 Manual Mode | M | (add toggle switch for this)
-| 🛡 Safety ON | O | and ⚠ Safety OFF | P |   (add toggle switch for this)
+| 🤖 Auto Mode | A |  
+|👤 Manual Mode | M | 
+| 🛡 Safety ON | O | 
+|⚠ Safety OFF | P |  
 | 💃 Dance 1 | 1 |
 | 💃 Dance 2 | 2 |
 | 💃 Dance 3 | 3 |
@@ -153,6 +155,8 @@ This project uses **Bluetooth Electronics** by **Keuwlsoft**.
 | 💃 Dance 5 | 5 |
 | 💃 Dance 6 | 6 |
 | 💃 Dance 7 | 7 |
+| 💃 Dance 8 | 8 |
+| 💃 Dance 9 | 9 |
 
 > **Note:** Configure every button to send its assigned character when pressed.
 
