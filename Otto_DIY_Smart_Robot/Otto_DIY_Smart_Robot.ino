@@ -1,5 +1,8 @@
+#include "pitches.h"
 #include <Servo.h>
 #include <Oscillator.h>
+
+#define REST 0
 
 // ==========================================
 // HARDWARE PINS & SETUP
@@ -25,6 +28,150 @@ char lastExecutedCommand = 'S';
 bool isAutonomous = false; 
 bool isInterrupted = false;
 bool manualSafety = true; // Controls obstacle detection in Manual Mode
+
+// ==========================================
+// MACRO 8 & 9 SONG DATA
+// ==========================================
+
+int hbMelody[] = {
+  NOTE_C4, NOTE_C4, NOTE_D4, NOTE_C4, NOTE_F4, NOTE_E4,
+  NOTE_C4, NOTE_C4, NOTE_D4, NOTE_C4, NOTE_G4, NOTE_F4,
+  NOTE_C4, NOTE_C4, NOTE_C5, NOTE_A4, NOTE_F4, NOTE_E4, NOTE_D4,
+  NOTE_AS4, NOTE_AS4, NOTE_A4, NOTE_F4, NOTE_G4, NOTE_F4
+};
+
+int hbDurations[] = {
+  8, 8, 4, 4, 4, 2,
+  8, 8, 4, 4, 4, 2,
+  8, 8, 4, 4, 4, 4, 2,
+  8, 8, 4, 4, 4, 2
+};
+
+int marioMelody[] = {
+  NOTE_E5, NOTE_E5, REST, NOTE_E5, REST, NOTE_C5, NOTE_E5,
+  NOTE_G5, REST, NOTE_G4, REST, 
+  NOTE_C5, NOTE_G4, REST, NOTE_E4,
+  NOTE_A4, NOTE_B4, NOTE_AS4, NOTE_A4,
+  NOTE_G4, NOTE_E5, NOTE_G5, NOTE_A5, NOTE_F5, NOTE_G5,
+  REST, NOTE_E5,NOTE_C5, NOTE_D5, NOTE_B4,
+  NOTE_C5, NOTE_G4, REST, NOTE_E4,
+  NOTE_A4, NOTE_B4, NOTE_AS4, NOTE_A4,
+  NOTE_G4, NOTE_E5, NOTE_G5, NOTE_A5, NOTE_F5, NOTE_G5,
+  REST, NOTE_E5,NOTE_C5, NOTE_D5, NOTE_B4,
+  
+  REST, NOTE_G5, NOTE_FS5, NOTE_F5, NOTE_DS5, NOTE_E5,
+  REST, NOTE_GS4, NOTE_A4, NOTE_C4, REST, NOTE_A4, NOTE_C5, NOTE_D5,
+  REST, NOTE_DS5, REST, NOTE_D5,
+  NOTE_C5, REST,
+  
+  NOTE_C5, NOTE_C5, NOTE_C5, REST, NOTE_C5, NOTE_D5,
+  NOTE_E5, NOTE_C5, 
+  NOTE_A4, NOTE_G4,
+  
+  NOTE_C5, NOTE_C5, NOTE_C5, REST, NOTE_C5, NOTE_D5, NOTE_E5,
+  REST, 
+  NOTE_C5, NOTE_C5, NOTE_C5, REST, NOTE_C5, NOTE_D5,
+  NOTE_E5, NOTE_C5, NOTE_A4, NOTE_G4,
+  NOTE_E5, NOTE_E5, REST, NOTE_E5, REST, NOTE_C5, NOTE_E5,
+  NOTE_G5, REST, NOTE_G4, REST, 
+  NOTE_C5, NOTE_G4, REST, NOTE_E4,
+  
+  NOTE_A4, NOTE_B4, NOTE_AS4, NOTE_A4,
+  NOTE_G4, NOTE_E5, NOTE_G5, NOTE_A5, NOTE_F5, NOTE_G5,
+  REST, NOTE_E5, NOTE_C5, NOTE_D5, NOTE_B4,
+  
+  NOTE_C5, NOTE_G4, REST, NOTE_E4,
+  NOTE_A4, NOTE_B4, NOTE_AS4, NOTE_A4,
+  NOTE_G4, NOTE_E5, NOTE_G5, NOTE_A5, NOTE_F5, NOTE_G5,
+  REST, NOTE_E5, NOTE_C5, NOTE_D5, NOTE_B4,
+  
+  NOTE_E5, NOTE_C5, NOTE_G4, REST, NOTE_GS4,
+  
+  NOTE_A4, NOTE_F5, NOTE_F5, NOTE_A4,
+  NOTE_D5, NOTE_A5, NOTE_A5, NOTE_A5, NOTE_G5, NOTE_F5,
+  
+  NOTE_E5, NOTE_C5, NOTE_A4, NOTE_G4,
+  NOTE_E5, NOTE_C5, NOTE_G4, REST, NOTE_GS4,
+  NOTE_A4, NOTE_F5, NOTE_F5, NOTE_A4,
+  NOTE_B4, NOTE_F5, NOTE_F5, NOTE_F5, NOTE_E5, NOTE_D5,
+  NOTE_C5, NOTE_E4, NOTE_E4, NOTE_C4,
+  
+  NOTE_E5, NOTE_C5, NOTE_G4, REST, NOTE_GS4,
+  NOTE_A4, NOTE_F5, NOTE_F5, NOTE_A4,
+  NOTE_D5, NOTE_A5, NOTE_A5, NOTE_A5, NOTE_G5, NOTE_F5,
+  
+  NOTE_E5, NOTE_C5, NOTE_A4, NOTE_G4,
+  NOTE_E5, NOTE_C5, NOTE_G4, REST, NOTE_GS4,
+  NOTE_A4, NOTE_F5, NOTE_F5, NOTE_A4,
+  NOTE_B4, NOTE_F5, NOTE_F5, NOTE_F5, NOTE_E5, NOTE_D5,
+  NOTE_C5, NOTE_E4, NOTE_E4, NOTE_C4,
+  NOTE_C5, NOTE_C5, NOTE_C5, REST, NOTE_C5, NOTE_D5, NOTE_E5,
+  
+  REST
+};
+
+int marioDurations[] = {
+  8, 8, 8, 8, 8, 8, 8,
+  4, 4, 8, 4, 
+  4, 8, 4, 4,
+  4, 4, 8, 4,
+  8, 8, 8, 4, 8, 8,
+  8, 4,8, 8, 4,
+  4, 8, 4, 4,
+  4, 4, 8, 4,
+  8, 8, 8, 4, 8, 8,
+  8, 4,8, 8, 4,
+  
+  4, 8, 8, 8, 4, 8,
+  8, 8, 8, 8, 8, 8, 8, 8,
+  4, 4, 8, 4,
+  2, 2,
+  
+  8, 4, 8, 8, 8, 4,
+  8, 
+  4, 8, 2,
+  
+  8, 4, 8, 8, 8, 8, 8,
+  1, 
+  8, 4, 8, 8, 8, 4,
+  8, 4, 8, 2,
+  8, 8, 8, 8, 8, 8, 4,
+  4, 4, 4, 4, 
+  4, 8, 4, 4,
+  
+  4, 4, 8, 4,
+  8, 8, 8, 4, 8, 8,
+  8, 4, 8, 8, 4,
+  
+  4, 8, 4, 4,
+  4, 4, 8, 4,
+  8, 8, 8, 4, 8, 8,
+  8, 4, 8, 8, 4,
+  
+  8, 4, 8, 4, 4,
+ 
+  8, 4, 8, 2,
+  8, 8, 8, 8, 8, 8,
+  
+  8, 4, 8, 2,
+  8, 4, 8, 4, 4,
+  8, 4, 8, 2,
+  8, 4, 8, 8, 8, 8,
+  8, 4, 8, 2,
+  
+  8, 4, 8, 4, 4,
+  8, 4, 8, 2,
+  8, 8, 8, 8, 8, 8,
+  
+  8, 4, 8, 2,
+  8, 4, 8, 4, 4,
+  8, 4, 8, 2,
+  8, 4, 8, 8, 8, 8,
+  8, 4, 8, 2,
+  8, 4, 8, 8, 8, 8, 8,
+ 
+  1
+};
 
 // ==========================================
 // CORE MOVEMENT ENGINE
@@ -102,14 +249,14 @@ void home() {
 // ==========================================
 
 void walk(int steps, int T) {
-  int A[4]= {15, 15, 30, 30}; int O[4] = {0, 0, 0, 0};
+  int A[4]= {23, 15, 30, 25}; int O[4] = {0, 0, 0, 0};
   double phase_diff[4] = {DEG2RAD(0), DEG2RAD(0), DEG2RAD(90), DEG2RAD(90)};
   for(int i=0; i<steps; i++) { CHK oscillate(A,O, T, phase_diff); }
 }
 
 void walkAuto(int steps, int T) {
   // Higher foot lift (25) exclusively for autonomous mode to prevent dragging/circling
-  int A[4]= {25, 25, 30, 30}; int O[4] = {0, 0, 0, 0};
+  int A[4]= {22, 15, 30, 25}; int O[4] = {0, 0, 0, 0};
   double phase_diff[4] = {DEG2RAD(0), DEG2RAD(0), DEG2RAD(90), DEG2RAD(90)};
   for(int i=0; i<steps; i++) { CHK oscillate(A,O, T, phase_diff); }
 }
@@ -420,6 +567,52 @@ void trexRage() {
   backyard(4, 1200); CHK
 }
 
+// -----------------------------------------------------
+// MACRO 8: HAPPY BIRTHDAY
+// -----------------------------------------------------
+void happyBirthdayDance() {
+  isInterrupted = false;
+  int size = sizeof(hbDurations) / sizeof(int);
+  for (int note = 0; note < size; note++) {
+    if (isInterrupted) return;
+    int duration = 1000 / hbDurations[note];
+    tone(Buzzer, hbMelody[note], duration);
+    int pauseBetweenNotes = duration * 1.30;
+    if (note % 2 == 0) {
+      lateral_fuerte(0, pauseBetweenNotes);
+    } else {
+      lateral_fuerte(1, pauseBetweenNotes);
+    }
+    noTone(Buzzer);
+  }
+}
+
+// -----------------------------------------------------
+// MACRO 9: MARIO THEME FULL
+// -----------------------------------------------------
+void marioThemeMacro() {
+  isInterrupted = false;
+  int size = sizeof(marioDurations) / sizeof(int);
+  for (int note = 0; note < size; note++) {
+    if (isInterrupted) return;
+    int duration = 1000 / marioDurations[note];
+    if (marioMelody[note] != REST) {
+      tone(Buzzer, marioMelody[note], duration);
+    }
+    
+    int pauseBetweenNotes = duration * 1.30;
+    if (pauseBetweenNotes >= 500) {
+       swing(1, pauseBetweenNotes);
+    } else if (pauseBetweenNotes >= 250) {
+       upDown(1, pauseBetweenNotes);
+    } else {
+       smartDelay(pauseBetweenNotes);
+    }
+
+    noTone(Buzzer);
+  }
+}
+
 // ==========================================
 // OBSTACLE ALARM 
 // ==========================================
@@ -615,6 +808,14 @@ void loop() {
     }
     else if (currentCommand == '7') {
       trexRage();
+      if (!isInterrupted) currentCommand = 'S'; 
+    }
+    else if (currentCommand == '8') {
+      happyBirthdayDance();
+      if (!isInterrupted) currentCommand = 'S'; 
+    }
+    else if (currentCommand == '9') {
+      marioThemeMacro();
       if (!isInterrupted) currentCommand = 'S'; 
     }
 
